@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.join(File.dirname(__FILE__),'/../lib'))
+require 'hewing'
+require 'choice'
+
+require 'log4r'
+include Log4r
+
+mylogger = Logger.new 'mylog'
+formatter = PatternFormatter.new(:pattern => "[%l] %d :: %.20m")
+mylogger.outputters = StdoutOutputter.new("console", :formatter => formatter)
+mylogger.level = Log4r::INFO
+
+Choice.options do
+  header ''
+  header 'Specific options:'
+
+  option :file, :required => true do
+    short '-f'
+    long '--file=FILE'
+    desc 'The log file you would like to analyze'
+  end
+
+  separator ''
+  separator 'Common options: '
+
+  option :help do
+    long '--help'
+    desc 'Show this message'
+  end
+  option :debug do
+    short '-d'
+    long '--debug'
+    desc 'Show debug (verbose)'
+    action do
+      mylogger.level=Log4r::DEBUG
+    end
+  end
+  option :version do
+    short '-v'
+    long '--version'
+    desc 'Show version'
+    action do
+      puts "hewing version #{Hewing::VERSION}"
+      exit
+    end
+  end
+end
+
+mylogger.debug "Starting up "
+mylogger.debug "Generating report "
+
+logfile = Hewing::Log.new(Choice[:file])
+report = logfile.generate_report
+
+print report.to_yaml
+
