@@ -5,7 +5,7 @@ A simple log processing tool.
 ## Installation
 
 ```
-> git clone 'https://github.com/davidx/hewing.git'
+> git clone https://github.com/davidx/hewing.git
 > cd hewing
 > rake install
 ```
