@@ -1,6 +1,12 @@
 # Hewing
 
 A simple log processing tool.
+This tool was created as an ruby exercise.
+Original requirements:
+Write a command line tool that parses the log and presents the following info to the user:
+    - What are the number of requests served by day?
+    - What are the 3 most frequent User Agents by day?
+    - What is the ratio of GET's to POST's by OS by day?
 
 ## Installation
 
